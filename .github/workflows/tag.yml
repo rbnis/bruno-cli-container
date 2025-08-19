@@ -22,7 +22,7 @@ jobs:
       - name: Check if tag exists
         id: check_tag
         run: |
-          if git rev-parse "v${BRUNO_VERSION}" >/dev/null 2>&1; then
+          if git rev-parse "v${{ env.bruno_version }}" >/dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
