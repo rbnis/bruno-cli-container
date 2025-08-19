@@ -1,0 +1,44 @@
+name: Create tag on bruno version changes
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - Dockerfile
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Get bruno version from Dockerfile
+        run: |
+          version=$(grep -oP 'ARG BRUNO_VERSION=\K[0-9.]+' Dockerfile)
+          echo "bruno_version=$version" >> $GITHUB_ENV
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${BRUNO_VERSION}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create git tag
+        if: steps.check_tag.outputs.exists == 'false'
+        uses: actions/github-script@v7
+        env:
+          TAG: ${{ env.bruno_version }}
+        with:
+          github-token: ${{ secrets.RELEASE_PAT }}
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v' + process.env.TAG,
+              sha: context.sha
+            })
