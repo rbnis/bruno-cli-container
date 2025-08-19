@@ -16,12 +16,13 @@ jobs:
 
       - name: Get bruno version from Dockerfile
         run: |
-          version=$(grep -oP 'ARG BRUNO_VERSION=\K[0-9.]+' Dockerfile)
+          version=$(grep 'ARG BRUNO_VERSION=' Dockerfile | sed -E 's/.*ARG BRUNO_VERSION=([^ ]+).*/\1/')
           echo "bruno_version=$version" >> $GITHUB_ENV
 
       - name: Check if tag exists
         id: check_tag
         run: |
+          git fetch --tags
           if git rev-parse "v${{ env.bruno_version }}" >/dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
@@ -36,7 +37,7 @@ jobs:
         with:
           github-token: ${{ secrets.RELEASE_PAT }}
           script: |
-            github.rest.git.createRef({
+            await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: 'refs/tags/v' + process.env.TAG,
