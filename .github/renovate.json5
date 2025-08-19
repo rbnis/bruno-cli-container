@@ -1,0 +1,45 @@
+{
+  "enabled": true,
+  "semanticCommits": "enabled",
+  "dependencyDashboard": false,
+  "rebaseWhen": "conflicted",
+  "labels": ["renovate"],
+  "packageRules": [
+    {
+      "enabled": true,
+      "matchDatasources": ["docker"],
+      "addLabels": ["docker"]
+      "commitMessageTopic": "container image {{depName}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+    },
+
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "addLabels": ["patch"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "addLabels": ["minor"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["major"]
+    },
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/|\\.)([Dd]ocker|[Cc]ontainer)file$/",
+        "/(^|/)([Dd]ocker|[Cc]ontainer)file[^/]*$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: (lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s(?:ENV|ARG)\\s+[A-Za-z0-9_]+?_VERSION[ =][\"']?(?<currentValue>.+?)[\"']?\\s"
+      ]
+    }
+  ]
+}
