@@ -1,4 +1,4 @@
-name: Release
+name: Release new version
 
 on:
   push:
@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   build:
+    name: Build
     uses: ./.github/workflows/build.yml
 
   release:
