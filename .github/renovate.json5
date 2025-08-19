@@ -8,11 +8,10 @@
     {
       "enabled": true,
       "matchDatasources": ["docker"],
-      "addLabels": ["docker"]
+      "addLabels": ["docker"],
       "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}"
     },
-
     {
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
@@ -28,7 +27,7 @@
     {
       "matchUpdateTypes": ["major"],
       "addLabels": ["major"]
-    },
+    }
   ],
   "customManagers": [
     {
