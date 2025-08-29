@@ -13,16 +13,14 @@
       "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}"
     },
     {
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": ["patch"],
+      "addLabels": ["patch"],
       "automerge": true
     },
     {
-      "matchUpdateTypes": ["patch"],
-      "addLabels": ["patch"]
-    },
-    {
       "matchUpdateTypes": ["minor"],
-      "addLabels": ["minor"]
+      "addLabels": ["minor"],
+      "automerge": true
     },
     {
       "matchUpdateTypes": ["major"],
