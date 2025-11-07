@@ -4,7 +4,7 @@ WORKDIR /bruno
 RUN chown -R nobody:nobody /bruno
 
 # renovate: datasource=npm depName=@usebruno/cli
-ARG BRUNO_VERSION=2.13.2
+ARG BRUNO_VERSION=2.14.0
 RUN npm install -g --no-fund --no-audit @usebruno/cli@${BRUNO_VERSION}
 
 USER nobody
