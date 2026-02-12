@@ -1,4 +1,4 @@
-FROM node:25.4.0-alpine3.22
+FROM node:25.6.1-alpine3.22
 
 WORKDIR /bruno
 RUN chown -R nobody:nobody /bruno
