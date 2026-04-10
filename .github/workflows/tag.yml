@@ -31,7 +31,7 @@ jobs:
 
       - name: Create git tag
         if: steps.check_tag.outputs.exists == 'false'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           TAG: ${{ env.bruno_version }}
         with:
